@@ -1,0 +1,18 @@
+== GARMINAGEDDON F3 passive USB probe — read-only ==
+rule: only class-0xFF vendor interfaces are ever opened; MSC interfaces are never written to
+
+device: 001/026  VID:PID 091e:255b  backend=pyusb/libusb
+  bDeviceClass=0x00 
+  serial: <unreadable: The device has no langid (permission issue, no string descri>
+  config 1: 1 interface(s), 500 mA
+    interface 0: class 0x08 subclass 0x06 protocol 0x50 mass storage (SCSI/Bulk-Only if subclass=06/proto=50)
+      ep 0x83 in        bulk       maxpkt=512 interval=0
+      ep 0x01 out       bulk       maxpkt=512 interval=0
+
+  => MASS-STORAGE-ONLY device (no 0xFF interface).
+     This is expected for nüvi 24x5/25x5: they have NO
+     Garmin-protocol USB mode (see findings F3). sysfs path:
+       /sys/bus/usb/devices/1-2 (interface 1-2:1.0)
+     No packets will be sent to it by this probe.
+
+RESULT: no vendor-class (0xFF) interface present on any Garmin device -> classic Garmin packet protocol is NOT reachable on this connection; nothing to handshake with.

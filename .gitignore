@@ -1,0 +1,6 @@
+# Firmware binaries are large (870 MB, 14 versions); hashes are tracked instead.
+refs/firmware/*
+!refs/firmware/hashes.txt
+# Extracted firmware streams
+refs/remote-sw/gcdv2/
+__pycache__/
